@@ -26,22 +26,18 @@ const questions = [
   },
 ];
 
-// Get references to DOM elements
 const questionsElement = document.getElementById("questions");
 const submitButton = document.getElementById("submit");
 const scoreElement = document.getElementById("score");
 
-// Load progress from session storage
 const loadProgress = () => JSON.parse(sessionStorage.getItem("progress")) || {};
 
-// Save progress to session storage
 const saveProgress = (progress) => sessionStorage.setItem("progress", JSON.stringify(progress));
 
-// Render quiz questions
 function renderQuestions() {
   const progress = loadProgress();
 
-  questionsElement.innerHTML = ""; // Clear previous content
+  questionsElement.innerHTML = "";
   questions.forEach((q, questionIndex) => {
     const questionDiv = document.createElement("div");
     const questionText = document.createElement("p");
@@ -65,14 +61,13 @@ function renderQuestions() {
       label.appendChild(radio);
       label.appendChild(document.createTextNode(choice));
       questionDiv.appendChild(label);
-      questionDiv.appendChild(document.createElement("br")); // Line break for better spacing
+      questionDiv.appendChild(document.createElement("br"));
     });
 
     questionsElement.appendChild(questionDiv);
   });
 }
 
-// Calculate and display the score
 function calculateScore() {
   const progress = loadProgress();
   let score = 0;
@@ -84,11 +79,9 @@ function calculateScore() {
   });
 
   scoreElement.textContent = `Your score is ${score} out of ${questions.length}`;
-  localStorage.setItem("score", score); // Save score to local storage
+  localStorage.setItem("score", score);
 }
 
-// Event listener for submit button
 submitButton.addEventListener("click", calculateScore);
 
-// Initial render
 renderQuestions();
